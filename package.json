@@ -4,7 +4,9 @@
   "description": "Advent of Code 2020",
   "main": "index.js",
   "scripts": {
-    "puzzle": "node src/index.js puzzle"
+    "puzzle": "node src/index.js puzzle",
+    "dev": "node src/index.js dev",
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -16,9 +18,11 @@
   "bugs": {
     "url": "https://github.com/jansphil/advent-of-code-2020/issues"
   },
-  "homepage": "https://github.com/jansphil/advent-of-code-2020#readme",
+  "homepage": "https://github.com/jansphil/adsvent-of-code-2020#readme",
   "dependencies": {
+    "ava": "^3.13.0",
     "commander": "^6.2.0",
+    "npm": "^6.14.9",
     "standard": "^16.0.3"
   }
 }
