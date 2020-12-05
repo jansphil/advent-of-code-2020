@@ -3,6 +3,7 @@ const path = require('path')
 const { Transform } = require('stream')
 
 const readFile = (dir, file = 'input.txt') => fs.readFileSync(path.join(dir, file), { encoding: 'utf-8' })
+
 const readStream = (dir, file = 'input.txt') => fs.createReadStream(path.join(dir, file), { encoding: 'utf-8' })
 
 const createStreamCounter = () => {
@@ -32,9 +33,15 @@ const createStreamFilter = (predicate) => {
   })
 }
 
+const splitStringAt = (string, index) => [string.slice(0, index), string.slice(index)]
+
+const transformString = (string, transformations) => string.split('').map((char) => transformations[char]).join('')
+
 module.exports = {
   readFile,
   readStream,
   createStreamCounter,
-  createStreamFilter
+  createStreamFilter,
+  splitStringAt,
+  transformString
 }
