@@ -2,10 +2,10 @@ const parseLine = (line) => {
   const bagsRegex = / bags?.?/
   let [outerBag, innerBags] = line.split(' contain ')
 
-  // will be something like 'dotted brown bags's
+  // will be something like 'dotted brown bags'
   outerBag = outerBag.replace(bagsRegex, '')
 
-  // will be something like '5 dark turquoise bags, 1 drab red bag.' or 'no other bags.'s
+  // will be something like '5 dark turquoise bags, 1 drab red bag.' or 'no other bags.'
   if (innerBags === 'no other bags.') {
     innerBags = []
   } else {
