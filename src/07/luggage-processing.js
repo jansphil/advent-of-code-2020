@@ -75,7 +75,7 @@ const part2 = (inputMap, targetColor) => {
       .reduce((acc, cur) => acc + cur)
   }
 
-  return countInnerBags(targetColor, 0)
+  return countInnerBags(targetColor)
 }
 
 module.exports = {
