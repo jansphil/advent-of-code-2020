@@ -1,9 +1,7 @@
-const { createArray } = require('../utils')
-
 const run = (input) => {
   let accumulator = 0
   let position = 0
-  const visited = createArray(input.length)
+  const visited = new Set()
 
   const commands = {
     nop: (arg) => {
@@ -19,11 +17,11 @@ const run = (input) => {
   }
 
   while (position < input.length) {
-    if (visited[position]) {
+    if (visited.has(position)) {
       return { accumulator, code: 1 }
     }
 
-    visited[position] = true
+    visited.add(position)
     const [instruction, arg] = input[position].split(' ')
     commands[instruction](parseInt(arg))
   }
