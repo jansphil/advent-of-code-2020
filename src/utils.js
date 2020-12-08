@@ -37,11 +37,14 @@ const splitStringAt = (string, index) => [string.slice(0, index), string.slice(i
 
 const transformString = (string, transformations) => string.split('').map((char) => transformations[char]).join('')
 
+const createArray = (length, value = false) => Array.from({ length }, (_) => value)
+
 module.exports = {
   readFile,
   readStream,
   createStreamCounter,
   createStreamFilter,
   splitStringAt,
-  transformString
+  transformString,
+  createArray
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "puzzle": "node src/index.js puzzle",
     "dev": "node src/index.js dev",
-    "test": "ava"
+    "test": "ava",
+    "lint": "standard --fix"
   },
   "repository": {
     "type": "git",
