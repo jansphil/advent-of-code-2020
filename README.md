@@ -21,3 +21,17 @@ npm run dev 01
 ```
 
 The tests are run with [AVA](https://github.com/avajs/ava).
+
+## Bootstrap daily puzzle
+
+To automatically fetch the puzzle input and create the scaffold, run:
+
+```bash
+npm run bootstrap 08 epic-solution
+```
+
+The bootstrap script
+
+- fetches the puzzle input by looking into the chrome cookie jar and using the stored session token
+- copies scaffolding files from the `00` folder
+- replaces name placeholders

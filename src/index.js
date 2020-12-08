@@ -9,4 +9,12 @@ program
   .command('dev <puzzle>')
   .action((puzzle) => npm.load(() => npm.run('test', '-w', `**/${puzzle}/*.test.js`)))
 
+program
+  .command('bootstrap <puzzle> <name>')
+  .action((puzzle, name) => {
+    require('./bootstrap')(puzzle, name)
+      .then((_) => console.log(`🎄 Good Luck with day ${puzzle} 🎄`))
+      .catch((err) => console.error(err))
+  })
+
 program.parse(process.argv)
