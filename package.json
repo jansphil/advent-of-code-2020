@@ -29,6 +29,7 @@
     "commander": "^6.2.0",
     "fluent-schema": "^1.0.6",
     "lodash": "^4.17.20",
+    "mathjs": "^8.1.0",
     "npm": "^6.14.9",
     "replace-in-file": "^6.1.0",
     "split": "^1.0.1",
