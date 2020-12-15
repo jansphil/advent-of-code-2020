@@ -10,7 +10,6 @@ test('part 1', (t) => {
   t.is(game([3, 1, 2], 2020), 1836)
 })
 
-// better not run this test, it takes way too long
-test.skip('part 2', (t) => {
+test('part 2', (t) => {
   t.is(game([1, 3, 2], 30000000), 2578)
 })

@@ -1,19 +1,20 @@
 const game = (input, n) => {
-  const memory = {}
+  const memory = new Map()
   input.forEach((number, i) => {
-    memory[number] = { last: i + 1, before: undefined }
+    memory.set(number, { last: i + 1, before: undefined })
   })
 
   let turn = input.length + 1
   let lastNumber = input[input.length - 1]
   while (turn <= n) {
-    const number = memory[lastNumber].before ? memory[lastNumber].last - memory[lastNumber].before : 0
+    const { last, before } = memory.get(lastNumber)
+    const number = typeof before === 'undefined' ? 0 : last - before
 
-    if (memory[number]) {
-      memory[number].before = memory[number].last
-      memory[number].last = turn
+    if (memory.has(number)) {
+      const { last: previousLast } = memory.get(number)
+      memory.set(number, { last: turn, before: previousLast })
     } else {
-      memory[number] = { last: turn, before: undefined }
+      memory.set(number, { last: turn, before: undefined })
     }
 
     lastNumber = number
