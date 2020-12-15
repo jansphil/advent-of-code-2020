@@ -1,27 +1,16 @@
 const game = (input, n) => {
   const memory = new Map()
-  input.forEach((number, i) => {
-    memory.set(number, { last: i + 1, before: undefined })
-  })
 
-  let turn = input.length + 1
-  let lastNumber = input[input.length - 1]
-  while (turn <= n) {
-    const { last, before } = memory.get(lastNumber)
-    const number = typeof before === 'undefined' ? 0 : last - before
+  input.slice(0, -1).forEach((number, i) => memory.set(number, i))
 
-    if (memory.has(number)) {
-      const { last: previousLast } = memory.get(number)
-      memory.set(number, { last: turn, before: previousLast })
-    } else {
-      memory.set(number, { last: turn, before: undefined })
-    }
-
-    lastNumber = number
-    turn++
+  let next = input[input.length - 1]
+  for (let turn = input.length - 1; turn < n - 1; turn++) {
+    const current = next
+    next = memory.has(current) ? turn - memory.get(current) : 0
+    memory.set(current, turn)
   }
 
-  return lastNumber
+  return next
 }
 
 module.exports = {
