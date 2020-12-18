@@ -1,5 +1,3 @@
-const ok = require('assert')
-
 const operator = {
   '+': (a, b) => a + b,
   '*': (a, b) => a * b
@@ -11,109 +9,66 @@ const evaluateTree = ({ node, left, right }) => {
   return operator[node](a, b)
 }
 
-const parseExpressionPart1 = (chars) => {
-  if (chars.length === 1) {
-    return parseInt(chars[0])
+const parseExpressionPart1 = (expression) => {
+  if (expression.length === 1) {
+    return typeof expression[0] === 'string' ? parseInt(expression[0]) : expression[0]
   }
 
-  let right
-  let i = chars.length - 1
-  if (chars[i] === ')') {
-    let depth = 0
-    while (true) {
-      if (chars[i] === ')') {
+  let chars = [...expression]
+  while (chars.indexOf('(') !== -1) {
+    const leftParanthesis = chars.indexOf('(')
+    let depth = 1
+    for (let i = leftParanthesis + 1; i < chars.length; i++) {
+      if (chars[i] === '(') {
         depth++
-      } else if (chars[i] === '(') {
+      } else if (chars[i] === ')') {
         depth--
+        if (depth === 0) {
+          const inner = parseExpressionPart1(chars.slice(leftParanthesis + 1, i))
+          chars = [...chars.slice(0, leftParanthesis), inner, ...chars.slice(i + 1)]
+          break
+        }
       }
-
-      if (depth === 0) {
-        right = parseExpressionPart1(chars.slice(i + 1, chars.length - 1))
-        break
-      }
-
-      i--
     }
-  } else {
-    right = parseInt(chars[i])
   }
 
-  if (i === 0) {
-    return right
-  }
-
-  const node = chars[i - 1]
-  const left = parseExpressionPart1(chars.slice(0, i - 1))
+  const len = chars.length
+  const node = chars[len - 2]
+  const right = parseExpressionPart1(chars.slice(len - 1))
+  const left = parseExpressionPart1(chars.slice(0, len - 2))
 
   return { node, left, right }
 }
 
-const parseExpressionPart2 = (chars, rightNode) => {
-  ok(chars.length > 0)
-  if (chars.length === 1) {
-    return parseInt(chars[0])
-  }
+const evaluatePart2 = (input) => {
+  let chars = input
 
-  let right
-  let i = chars.length - 1
-  if (rightNode) {
-    right = rightNode
-    i++
-  } else if (chars[i] === ')') {
-    let depth = 0
-    while (true) {
-      if (chars[i] === ')') {
-        depth++
-      } else if (chars[i] === '(') {
-        depth--
-      }
+  while (chars.indexOf('(') !== -1) {
+    const start = chars.indexOf('(')
+    let end = start + 1
+    let depth = 1
 
-      if (depth === 0) {
-        right = parseExpressionPart2(chars.slice(i + 1, chars.length - 1))
-        break
-      }
-      i--
-    }
-  } else {
-    right = parseInt(chars[i])
-  }
-
-  if (i === 0) {
-    return right
-  }
-
-  const node = chars[i - 1]
-
-  if (node === '+') {
-    let left
-    let j = i - 2
-    if (chars[j] === ')') {
-      let depth = 0
-      while (true) {
-        if (chars[j] === ')') {
-          depth++
-        } else if (chars[j] === '(') {
-          depth--
-        }
-
-        if (depth === 0) {
-          left = parseExpressionPart2(chars.slice(j + 1, i - 2))
-          break
-        }
-        j--
-      }
-    } else {
-      left = parseInt(chars[j])
+    while (depth !== 1 || chars[end] !== ')') {
+      if (chars[end] === '(') depth++
+      else if (chars[end] === ')') depth--
+      end++
     }
 
-    if (j === 0) {
-      return { node, left, right }
-    }
-    return parseExpressionPart2(chars.slice(0, j), { node, left, right })
-  } else {
-    const left = parseExpressionPart2(chars.slice(0, i - 1))
-    return { node, left, right }
+    const inner = evaluatePart2(chars.substring(start + 1, end))
+    chars = chars.substring(0, start) + inner + chars.substring(end + 1)
   }
+
+  return chars
+    .split('*')
+    .map((term) =>
+      term.length === 1
+        ? parseInt(term)
+        : term
+          .split('+')
+          .map((num) => parseInt(num))
+          .reduce((acc, cur) => acc + cur)
+    )
+    .reduce((acc, cur) => acc * cur)
 }
 
 const part1 = (input) =>
@@ -125,15 +80,13 @@ const part1 = (input) =>
 
 const part2 = (input) =>
   input
-    .map((line) => line.replace(/ /g, '').split(''))
-    .map((line) => parseExpressionPart2(line))
-    .map((tree) => evaluateTree(tree))
+    .map((line) => line.replace(/ /g, ''))
+    .map((line) => evaluatePart2(line))
     .reduce((acc, cur) => acc + cur)
 
 module.exports = {
   evaluateTree,
   parseExpressionPart1,
-  parseExpressionPart2,
   part1,
   part2
 }
