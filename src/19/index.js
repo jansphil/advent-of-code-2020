@@ -1,5 +1,5 @@
 const { readFile } = require('../utils')
-const { part1, part2 } = require('./monster-messagesss')
+const { part1, part2 } = require('./monster-messages')
 
 const [rules, messages] = readFile(__dirname).split('\n\n').map((block) => block.split('\n'))
 

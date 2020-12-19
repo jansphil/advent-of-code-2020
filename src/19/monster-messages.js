@@ -23,9 +23,7 @@ const createRuleMap = (rules) => {
   return ruleMap
 }
 
-const part1 = (rules, messages) => {
-  const ruleMap = createRuleMap(rules)
-
+const buildRegexStringForRuleMap = (ruleMap) => {
   const buildRegexString = (rule) => {
     const { letter, criterias } = ruleMap[rule]
 
@@ -39,6 +37,14 @@ const part1 = (rules, messages) => {
 
     return criterias.length === 1 ? criteriaRegex : `(?:${criteriaRegex})`
   }
+
+  return buildRegexString
+}
+
+const part1 = (rules, messages) => {
+  const ruleMap = createRuleMap(rules)
+
+  const buildRegexString = buildRegexStringForRuleMap(ruleMap)
 
   const regex = new RegExp(`^${buildRegexString('0')}$`)
 
@@ -50,24 +56,12 @@ const part1 = (rules, messages) => {
 const part2 = (rules, messages) => {
   const ruleMap = createRuleMap(rules)
 
-  const buildRegexString = (rule) => {
-    const { letter, criterias } = ruleMap[rule]
-
-    if (letter) {
-      return letter
-    }
-
-    const criteriaRegex = criterias
-      .map((subCriterias) => subCriterias.map(buildRegexString).join(''))
-      .join('|')
-
-    return criterias.length === 1 ? criteriaRegex : `(?:${criteriaRegex})`
-  }
+  const buildRegexString = buildRegexStringForRuleMap(ruleMap)
 
   // we now hard code the following rules
   //  - 0: 8 11
-  //  - 8: 42 | 42 8
-  //  - 11: 42 31 | 42 11 31
+  //  - 8: 42 | 42 8 => 42+
+  //  - 11: 42 31 | 42 11 31 => 42{n}31{n} for n > 1
 
   const regex42 = buildRegexString('42')
   const regex31 = buildRegexString('31')

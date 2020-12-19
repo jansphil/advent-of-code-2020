@@ -1,5 +1,5 @@
 const test = require('ava').default
-const { part1, part2 } = require('./monster-messagesss')
+const { part1, part2 } = require('./monster-messages')
 
 test('part 1', (t) => {
   const rules = [
