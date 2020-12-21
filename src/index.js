@@ -7,7 +7,12 @@ program
 
 program
   .command('dev <puzzle>')
-  .action((puzzle) => npm.load(() => npm.run('test', '-w', `**/${puzzle}/*.test.js`)))
+  .action((puzzle) => npm.load(() => {
+    npm.commands['run-script'](
+      ['test', '-w', `**/${puzzle}/*.test.js`],
+      () => { }
+    )
+  }))
 
 program
   .command('bootstrap <puzzle> <name>')

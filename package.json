@@ -30,7 +30,7 @@
     "fluent-schema": "^1.0.6",
     "lodash": "^4.17.20",
     "mathjs": "^8.1.0",
-    "npm": "^6.14.9",
+    "npm": "^7.3.0",
     "replace-in-file": "^6.1.0",
     "split": "^1.0.1",
     "standard": "^16.0.3"
