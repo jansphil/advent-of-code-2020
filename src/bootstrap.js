@@ -31,7 +31,7 @@ const getPuzzleInput = async (day) => {
     `https://adventofcode.com/2020/day/${parseInt(day)}/input`,
     { headers: { cookie: `session=${session}` } }
   )
-  return data
+  return data.toString()
 }
 
 const bootstrap = async (day, name) => {
