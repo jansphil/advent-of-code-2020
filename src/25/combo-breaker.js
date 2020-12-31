@@ -26,10 +26,6 @@ const part1 = (cardPublicKey, doorPublicKey) => {
   return cardEncryptionKey
 }
 
-const part2 = (input) => {
-}
-
 module.exports = {
-  part1,
-  part2
+  part1
 }

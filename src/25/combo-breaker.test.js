@@ -1,12 +1,6 @@
 const test = require('ava').default
-const { part1, part2 } = require('./combo-breaker')
-
-const input = []
+const { part1 } = require('./combo-breaker')
 
 test('part 1', (t) => {
-  t.is(part1(input), 42)
-})
-
-test('part 2', (t) => {
-  t.is(part2(input), 42)
+  t.is(part1(5764801, 17807724), 14897079)
 })
